@@ -181,6 +181,8 @@ message TestAllTypes {
     string oneof_string = 113;
     bytes oneof_bytes = 114;
   }
+
+  optional string optional_redacted_string = 115 [debug_redact = true];
 }
 
 // This proto includes a recursively nested message.
