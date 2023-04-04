@@ -2644,12 +2644,16 @@ bool Reflection::SupportsUnknownEnumValues() const {
 template <class Type>
 const Type& Reflection::GetRawNonOneof(const Message& message,
                                        const FieldDescriptor* field) const {
+  const uint32_t field_offset = schema_.GetFieldOffsetNonOneof(field);
   if (schema_.IsSplit(field)) {
-    return *GetConstPointerAtOffset<Type>(
-        GetSplitField(&message), schema_.GetFieldOffsetNonOneof(field));
+    const void* split = GetSplitField(&message);
+    if (field->is_repeated()) {
+      return **GetConstPointerAtOffset<Type*>(split, field_offset);
+    } else {
+      return *GetConstPointerAtOffset<Type>(split, field_offset);
+    }
   }
-  return GetConstRefAtOffset<Type>(message,
-                                   schema_.GetFieldOffsetNonOneof(field));
+  return GetConstRefAtOffset<Type>(message, field_offset);
 }
 
 void Reflection::PrepareSplitMessageForWrite(Message* message) const {
@@ -2665,27 +2669,72 @@ void Reflection::PrepareSplitMessageForWrite(Message* message) const {
   }
 }
 
+namespace {
+
+template <class Type>
+RepeatedField<Type>* AllocIfDefault(RepeatedField<Type>*& ptr, Arena* arena) {
+  if (ptr == internal::DefaultRepeatedField()) {
+    ptr = Arena::CreateMessage<RepeatedField<Type>>(arena);
+  }
+  return ptr;
+}
+
+template <class Type>
+RepeatedPtrField<Type>* AllocIfDefault(RepeatedPtrField<Type>*& ptr,
+                                       Arena* arena) {
+  if (ptr == internal::DefaultRepeatedPtrField()) {
+    ptr = Arena::CreateMessage<RepeatedPtrField<Type>>(arena);
+  }
+  return ptr;
+}
+
+template <class Type>
+Type* AllocIfDefault(Type*& ptr, Arena* arena) {
+  return ptr;
+}
+
+template <>
+RepeatedPtrFieldBase* AllocIfDefault(RepeatedPtrFieldBase*& ptr, Arena* arena) {
+  if (ptr == internal::DefaultRepeatedPtrField()) {
+    ptr = Arena::CreateMessage<RepeatedPtrFieldBase>(arena);
+  }
+  return ptr;
+}
+
+}  // namespace
+
 template <class Type>
 Type* Reflection::MutableRawNonOneof(Message* message,
                                      const FieldDescriptor* field) const {
+  const uint32_t field_offset = schema_.GetFieldOffsetNonOneof(field);
   if (schema_.IsSplit(field)) {
     PrepareSplitMessageForWrite(message);
-    return GetPointerAtOffset<Type>(*MutableSplitField(message),
-                                    schema_.GetFieldOffsetNonOneof(field));
+    void** split = MutableSplitField(message);
+    if (field->is_repeated()) {
+      return AllocIfDefault(*GetPointerAtOffset<Type*>(*split, field_offset),
+                            message->GetArenaForAllocation());
+    } else {
+      return GetPointerAtOffset<Type>(*split, field_offset);
+    }
   }
-  return GetPointerAtOffset<Type>(message,
-                                  schema_.GetFieldOffsetNonOneof(field));
+  return GetPointerAtOffset<Type>(message, field_offset);
 }
 
 template <typename Type>
 Type* Reflection::MutableRaw(Message* message,
                              const FieldDescriptor* field) const {
+  const uint32_t field_offset = schema_.GetFieldOffset(field);
   if (schema_.IsSplit(field)) {
     PrepareSplitMessageForWrite(message);
-    return GetPointerAtOffset<Type>(*MutableSplitField(message),
-                                    schema_.GetFieldOffset(field));
+    void** split = MutableSplitField(message);
+    if (field->is_repeated()) {
+      return AllocIfDefault(*GetPointerAtOffset<Type*>(*split, field_offset),
+                            message->GetArenaForAllocation());
+    } else {
+      return GetPointerAtOffset<Type>(*split, field_offset);
+    }
   }
-  return GetPointerAtOffset<Type>(message, schema_.GetFieldOffset(field));
+  return GetPointerAtOffset<Type>(message, field_offset);
 }
 
 const uint32_t* Reflection::GetHasBits(const Message& message) const {
