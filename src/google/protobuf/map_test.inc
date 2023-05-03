@@ -340,6 +340,14 @@ struct hash<google::protobuf::internal::MoveTestKey> {
 namespace google {
 namespace protobuf {
 namespace internal {
+
+template <>
+struct RealKeyToVariantKey<MoveTestKey> {
+  VariantKey operator()(const MoveTestKey& value) const {
+    return VariantKey(value.data);
+  }
+};
+
 namespace {
 
 TEST_F(MapImplTest, OperatorBracketRValue) {
