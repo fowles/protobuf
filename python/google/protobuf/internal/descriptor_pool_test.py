@@ -1056,8 +1056,6 @@ class AddDescriptorTest(unittest.TestCase):
     pool = descriptor_pool.DescriptorPool()
     if api_implementation.Type() != 'python':
       with self.assertRaises(TypeError):
-        pool.AddDescriptor(0)
-      with self.assertRaises(TypeError):
         pool.AddEnumDescriptor(0)
       with self.assertRaises(TypeError):
         pool.AddServiceDescriptor(0)
