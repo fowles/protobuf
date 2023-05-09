@@ -8576,7 +8576,7 @@ class PROTOBUF_EXPORT GeneratedCodeInfo final :
 
 // repeated .google.protobuf.FileDescriptorProto file = 1;
 inline int FileDescriptorSet::_internal_file_size() const {
-  return _impl_.file_.size();
+  return _internal_file().size();
 }
 inline int FileDescriptorSet::file_size() const {
   return _internal_file_size();
@@ -8748,7 +8748,7 @@ inline void FileDescriptorProto::set_allocated_package(std::string* value) {
 
 // repeated string dependency = 3;
 inline int FileDescriptorProto::_internal_dependency_size() const {
-  return _impl_.dependency_.size();
+  return _internal_dependency().size();
 }
 inline int FileDescriptorProto::dependency_size() const {
   return _internal_dependency_size();
@@ -8835,7 +8835,7 @@ FileDescriptorProto::_internal_mutable_dependency() {
 
 // repeated int32 public_dependency = 10;
 inline int FileDescriptorProto::_internal_public_dependency_size() const {
-  return _impl_.public_dependency_.size();
+  return _internal_public_dependency().size();
 }
 inline int FileDescriptorProto::public_dependency_size() const {
   return _internal_public_dependency_size();
@@ -8873,7 +8873,7 @@ inline ::google::protobuf::RepeatedField<::int32_t>* FileDescriptorProto::_inter
 
 // repeated int32 weak_dependency = 11;
 inline int FileDescriptorProto::_internal_weak_dependency_size() const {
-  return _impl_.weak_dependency_.size();
+  return _internal_weak_dependency().size();
 }
 inline int FileDescriptorProto::weak_dependency_size() const {
   return _internal_weak_dependency_size();
@@ -8911,7 +8911,7 @@ inline ::google::protobuf::RepeatedField<::int32_t>* FileDescriptorProto::_inter
 
 // repeated .google.protobuf.DescriptorProto message_type = 4;
 inline int FileDescriptorProto::_internal_message_type_size() const {
-  return _impl_.message_type_.size();
+  return _internal_message_type().size();
 }
 inline int FileDescriptorProto::message_type_size() const {
   return _internal_message_type_size();
@@ -8953,7 +8953,7 @@ FileDescriptorProto::_internal_mutable_message_type() {
 
 // repeated .google.protobuf.EnumDescriptorProto enum_type = 5;
 inline int FileDescriptorProto::_internal_enum_type_size() const {
-  return _impl_.enum_type_.size();
+  return _internal_enum_type().size();
 }
 inline int FileDescriptorProto::enum_type_size() const {
   return _internal_enum_type_size();
@@ -8995,7 +8995,7 @@ FileDescriptorProto::_internal_mutable_enum_type() {
 
 // repeated .google.protobuf.ServiceDescriptorProto service = 6;
 inline int FileDescriptorProto::_internal_service_size() const {
-  return _impl_.service_.size();
+  return _internal_service().size();
 }
 inline int FileDescriptorProto::service_size() const {
   return _internal_service_size();
@@ -9037,7 +9037,7 @@ FileDescriptorProto::_internal_mutable_service() {
 
 // repeated .google.protobuf.FieldDescriptorProto extension = 7;
 inline int FileDescriptorProto::_internal_extension_size() const {
-  return _impl_.extension_.size();
+  return _internal_extension().size();
 }
 inline int FileDescriptorProto::extension_size() const {
   return _internal_extension_size();
@@ -9650,7 +9650,7 @@ inline void DescriptorProto::set_allocated_name(std::string* value) {
 
 // repeated .google.protobuf.FieldDescriptorProto field = 2;
 inline int DescriptorProto::_internal_field_size() const {
-  return _impl_.field_.size();
+  return _internal_field().size();
 }
 inline int DescriptorProto::field_size() const {
   return _internal_field_size();
@@ -9692,7 +9692,7 @@ DescriptorProto::_internal_mutable_field() {
 
 // repeated .google.protobuf.FieldDescriptorProto extension = 6;
 inline int DescriptorProto::_internal_extension_size() const {
-  return _impl_.extension_.size();
+  return _internal_extension().size();
 }
 inline int DescriptorProto::extension_size() const {
   return _internal_extension_size();
@@ -9734,7 +9734,7 @@ DescriptorProto::_internal_mutable_extension() {
 
 // repeated .google.protobuf.DescriptorProto nested_type = 3;
 inline int DescriptorProto::_internal_nested_type_size() const {
-  return _impl_.nested_type_.size();
+  return _internal_nested_type().size();
 }
 inline int DescriptorProto::nested_type_size() const {
   return _internal_nested_type_size();
@@ -9776,7 +9776,7 @@ DescriptorProto::_internal_mutable_nested_type() {
 
 // repeated .google.protobuf.EnumDescriptorProto enum_type = 4;
 inline int DescriptorProto::_internal_enum_type_size() const {
-  return _impl_.enum_type_.size();
+  return _internal_enum_type().size();
 }
 inline int DescriptorProto::enum_type_size() const {
   return _internal_enum_type_size();
@@ -9818,7 +9818,7 @@ DescriptorProto::_internal_mutable_enum_type() {
 
 // repeated .google.protobuf.DescriptorProto.ExtensionRange extension_range = 5;
 inline int DescriptorProto::_internal_extension_range_size() const {
-  return _impl_.extension_range_.size();
+  return _internal_extension_range().size();
 }
 inline int DescriptorProto::extension_range_size() const {
   return _internal_extension_range_size();
@@ -9860,7 +9860,7 @@ DescriptorProto::_internal_mutable_extension_range() {
 
 // repeated .google.protobuf.OneofDescriptorProto oneof_decl = 8;
 inline int DescriptorProto::_internal_oneof_decl_size() const {
-  return _impl_.oneof_decl_.size();
+  return _internal_oneof_decl().size();
 }
 inline int DescriptorProto::oneof_decl_size() const {
   return _internal_oneof_decl_size();
@@ -9992,7 +9992,7 @@ inline void DescriptorProto::set_allocated_options(::google::protobuf::MessageOp
 
 // repeated .google.protobuf.DescriptorProto.ReservedRange reserved_range = 9;
 inline int DescriptorProto::_internal_reserved_range_size() const {
-  return _impl_.reserved_range_.size();
+  return _internal_reserved_range().size();
 }
 inline int DescriptorProto::reserved_range_size() const {
   return _internal_reserved_range_size();
@@ -10034,7 +10034,7 @@ DescriptorProto::_internal_mutable_reserved_range() {
 
 // repeated string reserved_name = 10;
 inline int DescriptorProto::_internal_reserved_name_size() const {
-  return _impl_.reserved_name_.size();
+  return _internal_reserved_name().size();
 }
 inline int DescriptorProto::reserved_name_size() const {
   return _internal_reserved_name_size();
@@ -10355,7 +10355,7 @@ inline void ExtensionRangeOptions_Declaration::_internal_set_repeated(bool value
 
 // repeated .google.protobuf.UninterpretedOption uninterpreted_option = 999;
 inline int ExtensionRangeOptions::_internal_uninterpreted_option_size() const {
-  return _impl_.uninterpreted_option_.size();
+  return _internal_uninterpreted_option().size();
 }
 inline int ExtensionRangeOptions::uninterpreted_option_size() const {
   return _internal_uninterpreted_option_size();
@@ -10397,7 +10397,7 @@ ExtensionRangeOptions::_internal_mutable_uninterpreted_option() {
 
 // repeated .google.protobuf.ExtensionRangeOptions.Declaration declaration = 2 [retention = RETENTION_SOURCE];
 inline int ExtensionRangeOptions::_internal_declaration_size() const {
-  return _impl_.declaration_.size();
+  return _internal_declaration().size();
 }
 inline int ExtensionRangeOptions::declaration_size() const {
   return _internal_declaration_size();
@@ -11279,7 +11279,7 @@ inline void EnumDescriptorProto::set_allocated_name(std::string* value) {
 
 // repeated .google.protobuf.EnumValueDescriptorProto value = 2;
 inline int EnumDescriptorProto::_internal_value_size() const {
-  return _impl_.value_.size();
+  return _internal_value().size();
 }
 inline int EnumDescriptorProto::value_size() const {
   return _internal_value_size();
@@ -11411,7 +11411,7 @@ inline void EnumDescriptorProto::set_allocated_options(::google::protobuf::EnumO
 
 // repeated .google.protobuf.EnumDescriptorProto.EnumReservedRange reserved_range = 4;
 inline int EnumDescriptorProto::_internal_reserved_range_size() const {
-  return _impl_.reserved_range_.size();
+  return _internal_reserved_range().size();
 }
 inline int EnumDescriptorProto::reserved_range_size() const {
   return _internal_reserved_range_size();
@@ -11453,7 +11453,7 @@ EnumDescriptorProto::_internal_mutable_reserved_range() {
 
 // repeated string reserved_name = 5;
 inline int EnumDescriptorProto::_internal_reserved_name_size() const {
-  return _impl_.reserved_name_.size();
+  return _internal_reserved_name().size();
 }
 inline int EnumDescriptorProto::reserved_name_size() const {
   return _internal_reserved_name_size();
@@ -11789,7 +11789,7 @@ inline void ServiceDescriptorProto::set_allocated_name(std::string* value) {
 
 // repeated .google.protobuf.MethodDescriptorProto method = 2;
 inline int ServiceDescriptorProto::_internal_method_size() const {
-  return _impl_.method_.size();
+  return _internal_method().size();
 }
 inline int ServiceDescriptorProto::method_size() const {
   return _internal_method_size();
@@ -13139,7 +13139,7 @@ inline void FileOptions::set_allocated_ruby_package(std::string* value) {
 
 // repeated .google.protobuf.UninterpretedOption uninterpreted_option = 999;
 inline int FileOptions::_internal_uninterpreted_option_size() const {
-  return _impl_.uninterpreted_option_.size();
+  return _internal_uninterpreted_option().size();
 }
 inline int FileOptions::uninterpreted_option_size() const {
   return _internal_uninterpreted_option_size();
@@ -13310,7 +13310,7 @@ inline void MessageOptions::_internal_set_deprecated_legacy_json_field_conflicts
 
 // repeated .google.protobuf.UninterpretedOption uninterpreted_option = 999;
 inline int MessageOptions::_internal_uninterpreted_option_size() const {
-  return _impl_.uninterpreted_option_.size();
+  return _internal_uninterpreted_option().size();
 }
 inline int MessageOptions::uninterpreted_option_size() const {
   return _internal_uninterpreted_option_size();
@@ -13584,7 +13584,7 @@ inline void FieldOptions::_internal_set_retention(::google::protobuf::FieldOptio
 
 // repeated .google.protobuf.FieldOptions.OptionTargetType targets = 19;
 inline int FieldOptions::_internal_targets_size() const {
-  return _impl_.targets_.size();
+  return _internal_targets().size();
 }
 inline int FieldOptions::targets_size() const {
   return _internal_targets_size();
@@ -13623,7 +13623,7 @@ inline ::google::protobuf::RepeatedField<int>* FieldOptions::_internal_mutable_t
 
 // repeated .google.protobuf.UninterpretedOption uninterpreted_option = 999;
 inline int FieldOptions::_internal_uninterpreted_option_size() const {
-  return _impl_.uninterpreted_option_.size();
+  return _internal_uninterpreted_option().size();
 }
 inline int FieldOptions::uninterpreted_option_size() const {
   return _internal_uninterpreted_option_size();
@@ -13695,7 +13695,7 @@ inline void FieldOptions::_internal_set_target_obsolete_do_not_use(::google::pro
 
 // repeated .google.protobuf.UninterpretedOption uninterpreted_option = 999;
 inline int OneofOptions::_internal_uninterpreted_option_size() const {
-  return _impl_.uninterpreted_option_.size();
+  return _internal_uninterpreted_option().size();
 }
 inline int OneofOptions::uninterpreted_option_size() const {
   return _internal_uninterpreted_option_size();
@@ -13816,7 +13816,7 @@ inline void EnumOptions::_internal_set_deprecated_legacy_json_field_conflicts(bo
 
 // repeated .google.protobuf.UninterpretedOption uninterpreted_option = 999;
 inline int EnumOptions::_internal_uninterpreted_option_size() const {
-  return _impl_.uninterpreted_option_.size();
+  return _internal_uninterpreted_option().size();
 }
 inline int EnumOptions::uninterpreted_option_size() const {
   return _internal_uninterpreted_option_size();
@@ -13887,7 +13887,7 @@ inline void EnumValueOptions::_internal_set_deprecated(bool value) {
 
 // repeated .google.protobuf.UninterpretedOption uninterpreted_option = 999;
 inline int EnumValueOptions::_internal_uninterpreted_option_size() const {
-  return _impl_.uninterpreted_option_.size();
+  return _internal_uninterpreted_option().size();
 }
 inline int EnumValueOptions::uninterpreted_option_size() const {
   return _internal_uninterpreted_option_size();
@@ -13958,7 +13958,7 @@ inline void ServiceOptions::_internal_set_deprecated(bool value) {
 
 // repeated .google.protobuf.UninterpretedOption uninterpreted_option = 999;
 inline int ServiceOptions::_internal_uninterpreted_option_size() const {
-  return _impl_.uninterpreted_option_.size();
+  return _internal_uninterpreted_option().size();
 }
 inline int ServiceOptions::uninterpreted_option_size() const {
   return _internal_uninterpreted_option_size();
@@ -14055,7 +14055,7 @@ inline void MethodOptions::_internal_set_idempotency_level(::google::protobuf::M
 
 // repeated .google.protobuf.UninterpretedOption uninterpreted_option = 999;
 inline int MethodOptions::_internal_uninterpreted_option_size() const {
-  return _impl_.uninterpreted_option_.size();
+  return _internal_uninterpreted_option().size();
 }
 inline int MethodOptions::uninterpreted_option_size() const {
   return _internal_uninterpreted_option_size();
@@ -14193,7 +14193,7 @@ inline void UninterpretedOption_NamePart::_internal_set_is_extension(bool value)
 
 // repeated .google.protobuf.UninterpretedOption.NamePart name = 2;
 inline int UninterpretedOption::_internal_name_size() const {
-  return _impl_.name_.size();
+  return _internal_name().size();
 }
 inline int UninterpretedOption::name_size() const {
   return _internal_name_size();
@@ -14503,7 +14503,7 @@ inline void UninterpretedOption::set_allocated_aggregate_value(std::string* valu
 
 // repeated int32 path = 1 [packed = true];
 inline int SourceCodeInfo_Location::_internal_path_size() const {
-  return _impl_.path_.size();
+  return _internal_path().size();
 }
 inline int SourceCodeInfo_Location::path_size() const {
   return _internal_path_size();
@@ -14541,7 +14541,7 @@ inline ::google::protobuf::RepeatedField<::int32_t>* SourceCodeInfo_Location::_i
 
 // repeated int32 span = 2 [packed = true];
 inline int SourceCodeInfo_Location::_internal_span_size() const {
-  return _impl_.span_.size();
+  return _internal_span().size();
 }
 inline int SourceCodeInfo_Location::span_size() const {
   return _internal_span_size();
@@ -14705,7 +14705,7 @@ inline void SourceCodeInfo_Location::set_allocated_trailing_comments(std::string
 
 // repeated string leading_detached_comments = 6;
 inline int SourceCodeInfo_Location::_internal_leading_detached_comments_size() const {
-  return _impl_.leading_detached_comments_.size();
+  return _internal_leading_detached_comments().size();
 }
 inline int SourceCodeInfo_Location::leading_detached_comments_size() const {
   return _internal_leading_detached_comments_size();
@@ -14796,7 +14796,7 @@ SourceCodeInfo_Location::_internal_mutable_leading_detached_comments() {
 
 // repeated .google.protobuf.SourceCodeInfo.Location location = 1;
 inline int SourceCodeInfo::_internal_location_size() const {
-  return _impl_.location_.size();
+  return _internal_location().size();
 }
 inline int SourceCodeInfo::location_size() const {
   return _internal_location_size();
@@ -14842,7 +14842,7 @@ SourceCodeInfo::_internal_mutable_location() {
 
 // repeated int32 path = 1 [packed = true];
 inline int GeneratedCodeInfo_Annotation::_internal_path_size() const {
-  return _impl_.path_.size();
+  return _internal_path().size();
 }
 inline int GeneratedCodeInfo_Annotation::path_size() const {
   return _internal_path_size();
@@ -15023,7 +15023,7 @@ inline void GeneratedCodeInfo_Annotation::_internal_set_semantic(::google::proto
 
 // repeated .google.protobuf.GeneratedCodeInfo.Annotation annotation = 1;
 inline int GeneratedCodeInfo::_internal_annotation_size() const {
-  return _impl_.annotation_.size();
+  return _internal_annotation().size();
 }
 inline int GeneratedCodeInfo::annotation_size() const {
   return _internal_annotation_size();
