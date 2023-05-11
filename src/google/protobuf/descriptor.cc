@@ -3674,6 +3674,13 @@ void OneofDescriptor::GetLocationPath(std::vector<int>* output) const {
   output->push_back(index());
 }
 
+void Descriptor::ExtensionRange::GetLocationPath(
+    std::vector<int>* output) const {
+  containing_type()->GetLocationPath(output);
+  output->push_back(DescriptorProto::kExtensionRangeFieldNumber);
+  output->push_back(index());
+}
+
 void EnumDescriptor::GetLocationPath(std::vector<int>* output) const {
   if (containing_type()) {
     containing_type()->GetLocationPath(output);
@@ -6110,10 +6117,12 @@ void DescriptorBuilder::BuildExtensionRange(
     Descriptor::ExtensionRange* result, internal::FlatAllocator& alloc) {
   result->start = proto.start();
   result->end = proto.end();
+  result->containing_type_ = parent;
+
   if (result->start <= 0) {
     message_hints_[parent].RequestHintOnFieldNumbers(
-        proto, DescriptorPool::ErrorCollector::NUMBER, result->start,
-        result->end);
+        proto, DescriptorPool::ErrorCollector::NUMBER, result->start_number(),
+        result->end_number());
     AddError(parent->full_name(), proto, DescriptorPool::ErrorCollector::NUMBER,
              "Extension numbers must be positive integers.");
   }
@@ -6123,25 +6132,18 @@ void DescriptorBuilder::BuildExtensionRange(
   // have extensions beyond FieldDescriptor::kMaxNumber, since the extension
   // numbers are actually used as int32s in the message_set_wire_format.
 
-  if (result->start >= result->end) {
+  if (result->start_number() >= result->end_number()) {
     AddError(parent->full_name(), proto, DescriptorPool::ErrorCollector::NUMBER,
              "Extension range end number must be greater than start number.");
   }
 
-  result->options_ = nullptr;  // Set to default_instance later if necessary.
-  if (proto.has_options()) {
-    std::vector<int> options_path;
-    parent->GetLocationPath(&options_path);
-    options_path.push_back(DescriptorProto::kExtensionRangeFieldNumber);
-    // find index of this extension range in order to compute path
-    int index;
-    for (index = 0; parent->extension_ranges_ + index != result; index++) {
-    }
-    options_path.push_back(index);
-    options_path.push_back(DescriptorProto_ExtensionRange::kOptionsFieldNumber);
-    result->options_ = AllocateOptionsImpl<Descriptor::ExtensionRange>(
-        parent->full_name(), parent->full_name(), proto, options_path,
-        "google.protobuf.ExtensionRangeOptions", alloc);
+  // Copy options
+  {
+    ExtensionRangeOptions* options =
+        AllocateOptions<Descriptor::ExtensionRange>(
+            proto, result, DescriptorProto_ExtensionRange::kOptionsFieldNumber,
+            "google.protobuf.ExtensionRangeOptions", alloc);
+    result->options_ = options;
   }
 }
 
@@ -6186,9 +6188,12 @@ void DescriptorBuilder::BuildOneof(const OneofDescriptorProto& proto,
   result->fields_ = nullptr;
 
   // Copy options.
-  result->options_ =
-      AllocateOptions(proto, result, OneofDescriptorProto::kOptionsFieldNumber,
-                      "google.protobuf.OneofOptions", alloc);
+  {
+    OneofOptions* options = AllocateOptions(
+        proto, result, OneofDescriptorProto::kOptionsFieldNumber,
+        "google.protobuf.OneofOptions", alloc);
+    result->options_ = options;  // Set to default_instance later if necessary.
+  }
 
   AddSymbol(result->full_name(), parent, result->name(), proto, Symbol(result));
 }
@@ -6459,9 +6464,12 @@ void DescriptorBuilder::BuildService(const ServiceDescriptorProto& proto,
   BUILD_ARRAY(proto, result, method, BuildMethod, result);
 
   // Copy options.
-  result->options_ = AllocateOptions(
-      proto, result, ServiceDescriptorProto::kOptionsFieldNumber,
-      "google.protobuf.ServiceOptions", alloc);
+  {
+    ServiceOptions* options = AllocateOptions(
+        proto, result, ServiceDescriptorProto::kOptionsFieldNumber,
+        "google.protobuf.ServiceOptions", alloc);
+    result->options_ = options;
+  }
 
   AddSymbol(result->full_name(), nullptr, result->name(), proto,
             Symbol(result));
@@ -6482,9 +6490,12 @@ void DescriptorBuilder::BuildMethod(const MethodDescriptorProto& proto,
   result->output_type_.Init();
 
   // Copy options.
-  result->options_ =
-      AllocateOptions(proto, result, MethodDescriptorProto::kOptionsFieldNumber,
-                      "google.protobuf.MethodOptions", alloc);
+  {
+    MethodOptions* options = AllocateOptions(
+        proto, result, MethodDescriptorProto::kOptionsFieldNumber,
+        "google.protobuf.MethodOptions", alloc);
+    result->options_ = options;
+  }
 
   result->client_streaming_ = proto.client_streaming();
   result->server_streaming_ = proto.server_streaming();
