@@ -111,6 +111,7 @@ PROTOBUF_EXPORT std::atomic<bool> enable_debug_text_format_marker;
 int64_t GetRedactedFieldCount() {
   return num_redacted_field.load(std::memory_order_relaxed);
 }
+
 }  // namespace internal
 
 std::string Message::DebugString() const {
@@ -2527,6 +2528,9 @@ void TextFormat::Printer::PrintField(const Message& message,
     PrintFieldName(message, field_index, count, reflection, field, generator);
 
     if (field->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE) {
+      if (TryRedactFieldValue(message, field, generator, true)) {
+        return;
+      }
       const FastFieldValuePrinter* printer = GetFieldPrinter(field);
       const Message& sub_message =
           field->is_repeated()
@@ -2607,9 +2611,7 @@ void TextFormat::Printer::PrintFieldValue(const Message& message,
       << "Index must be -1 for non-repeated fields";
 
   const FastFieldValuePrinter* printer = GetFieldPrinter(field);
-  if (redact_debug_string_ && field->options().debug_redact()) {
-    IncrementRedactedFieldCounter();
-    generator->PrintString("[REDACTED]");
+  if (TryRedactFieldValue(message, field, generator, false)) {
     return;
   }
 
@@ -2827,6 +2829,27 @@ void TextFormat::Printer::PrintUnknownFields(
         break;
     }
   }
+}
+
+bool TextFormat::Printer::TryRedactFieldValue(
+    const Message& message, const FieldDescriptor* field,
+    BaseTextGenerator* generator, bool insert_value_separator) const {
+  if (redact_debug_string_ && field->options().debug_redact()) {
+    IncrementRedactedFieldCounter();
+    if (insert_value_separator) {
+      generator->PrintMaybeWithMarker(MarkerToken(), ": ");
+    }
+    generator->PrintString("[REDACTED]");
+    if (insert_value_separator) {
+      if (single_line_mode_) {
+        generator->PrintLiteral(" ");
+      } else {
+        generator->PrintLiteral("\n");
+      }
+    }
+    return true;
+  }
+  return false;
 }
 
 }  // namespace protobuf
